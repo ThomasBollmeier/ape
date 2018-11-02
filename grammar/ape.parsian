@@ -1,0 +1,41 @@
+(*
+Grammar of APE
+
+APE is a PHP implementation of the Monkey programming language
+invented by Thorsten Ball (see https://interpreterbook.com/ for details)
+
+Version: 0.1
+Author: Thomas Bollmeier <developer@thomas-bollmeier.de
+*)
+
+-- Lexical elements
+
+literal '"' '\\';
+
+symbol EQ '=';
+symbol SEMICOLON ';';
+
+token ID /[a-zA-Z_][a-zA-Z0-9_]*/;
+token INT /[1-9][0-9]*/;
+
+@root
+ape -> stmt+;
+
+stmt -> let_stmt | return_stmt => child;
+
+let_stmt -> 'let' name#ID EQ value#expr SEMICOLON
+=> {
+    :name "let_stmt"
+    :children [
+        {:name "name" :text #name.text}
+        {:name "value" :children [#value]}
+    ]
+};
+
+return_stmt -> 'return' value#expr SEMICOLON =>
+{
+    :name "return_stmt"
+    :children [{:name "value" :children [#value]}]
+};
+
+expr -> INT | ID => child;
