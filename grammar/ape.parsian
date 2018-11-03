@@ -14,6 +14,14 @@ literal '"' '\\';
 
 symbol EQ '=';
 symbol SEMICOLON ';';
+symbol PLUS '+';
+symbol MINUS '-';
+symbol ASTERISK '*';
+symbol SLASH '/';
+symbol LPAR '(';
+symbol RPAR ')';
+symbol LBRACKET '[';
+symbol RBRACKET ']';
 
 token ID /[a-zA-Z_][a-zA-Z0-9_]*/;
 token INT /[1-9][0-9]*/;
@@ -38,4 +46,15 @@ return_stmt -> 'return' value#expr SEMICOLON =>
     :children [{:name "value" :children [#value]}]
 };
 
-expr -> INT | ID => child;
+expr -> prod ((PLUS|MINUS) prod)*;
+
+prod -> factor ((ASTERISK|SLASH) factor)*;
+
+factor -> base#atom_expr (LBRACKET idx#expr RBRACKET)*;
+
+atom_expr -> INT | ID | group => child;
+
+group -> LPAR expr#expr RPAR => {
+    :name "group"
+    :children [#expr]
+};

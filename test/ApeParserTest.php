@@ -28,7 +28,7 @@ class ApeParserTest extends TestCase
     public function testProgram() {
 
         $code = <<<CODE
-let answer = 42;
+let answer = (1 + 2 + 4) * 2 * 3;
 return 23;
 CODE;
 
