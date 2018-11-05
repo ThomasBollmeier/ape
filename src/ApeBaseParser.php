@@ -119,11 +119,9 @@ class ApeBaseParser extends parsian\Parser
             false);
 
         $grammar->setCustomRuleAst("group", function (Ast $ast) {
-            $res = new Ast("group", "");
-            $local_1 = $ast->getChildrenById("expr")[0];
-            $local_1->clearId();
-            $res->addChild($local_1);
-            return $res;
+            $child = $ast->getChildrenById("ex")[0];
+            $child->clearId();
+            return $child;
         });
 
 
@@ -191,7 +189,7 @@ class ApeBaseParser extends parsian\Parser
 
         return $grammar->seq()
             ->add($grammar->term("LPAR"))
-            ->add($grammar->ruleRef("expr", "expr"))
+            ->add($grammar->ruleRef("expr", "ex"))
             ->add($grammar->term("RPAR"));
     }
 

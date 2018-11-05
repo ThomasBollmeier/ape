@@ -5,7 +5,7 @@ APE is a PHP implementation of the Monkey programming language
 invented by Thorsten Ball (see https://interpreterbook.com/ for details)
 
 Version: 0.1
-Author: Thomas Bollmeier <developer@thomas-bollmeier.de
+Author: Thomas Bollmeier <developer@thomas-bollmeier.de>
 *)
 
 -- Lexical elements
@@ -54,7 +54,4 @@ factor -> base#atom_expr (LBRACKET idx#expr RBRACKET)*;
 
 atom_expr -> INT | ID | group => child;
 
-group -> LPAR expr#expr RPAR => {
-    :name "group"
-    :children [#expr]
-};
+group -> LPAR ex#expr RPAR => #ex;
