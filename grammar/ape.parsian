@@ -10,6 +10,8 @@ Author: Thomas Bollmeier <developer@thomas-bollmeier.de>
 
 -- Lexical elements
 
+comment '--' '\n';
+
 literal '"' '\\';
 
 symbol EQ '=';
@@ -22,6 +24,9 @@ symbol LPAR '(';
 symbol RPAR ')';
 symbol LBRACKET '[';
 symbol RBRACKET ']';
+symbol LBRACE '{';
+symbol RBRACE '}';
+symbol COMMA ',';
 
 token ID /[a-zA-Z_][a-zA-Z0-9_]*/;
 token INT /[1-9][0-9]*/;
@@ -29,7 +34,9 @@ token INT /[1-9][0-9]*/;
 @root
 ape -> stmt+;
 
-stmt -> let_stmt | return_stmt => child;
+stmt -> let_stmt
+    | return_stmt
+    | expr_stmt => child;
 
 let_stmt -> 'let' name#ID EQ value#expr SEMICOLON
 => {
@@ -46,12 +53,36 @@ return_stmt -> 'return' value#expr SEMICOLON =>
     :children [{:name "value" :children [#value]}]
 };
 
+expr_stmt -> ex#expr SEMICOLON =>
+{
+    :name "expr_stmt"
+    :children [#ex]
+};
+
 expr -> prod ((PLUS|MINUS) prod)*;
 
 prod -> factor ((ASTERISK|SLASH) factor)*;
 
-factor -> base#atom_expr (LBRACKET idx#expr RBRACKET)*;
+factor -> base#atom_expr (LBRACKET idx#expr RBRACKET)* | base#func_expr;
 
 atom_expr -> INT | ID | group => child;
 
 group -> LPAR ex#expr RPAR => #ex;
+
+func_expr -> 'fn' LPAR (p#expr (COMMA p#expr)*)? RPAR
+    LBRACE
+    st#stmt*
+    RBRACE
+=> {
+    :name "func_expr"
+    :children [
+        {
+            :name "params"
+            :children #p
+        }
+        {
+            :name "body"
+            :children #st
+        }
+    ]
+};

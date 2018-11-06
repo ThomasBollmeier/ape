@@ -30,6 +30,11 @@ class ApeParserTest extends TestCase
         $code = <<<CODE
 let answer = (1 + 2 + 4) * 2 * 3;
 return 23;
+let add = fn (a,b) {
+    let x = a;
+    let y = b;
+    return x +y;
+};
 CODE;
 
         $ast = $this->parser->parseString($code);

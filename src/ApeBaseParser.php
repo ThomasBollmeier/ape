@@ -25,6 +25,7 @@ class ApeBaseParser extends parsian\Parser
 
         $lexer = $this->getLexer();
 
+        $lexer->addCommentType("--", "\n");
 
         $lexer->addStringType("\"", "\\");
 
@@ -38,12 +39,16 @@ class ApeBaseParser extends parsian\Parser
         $lexer->addSymbol(")", "RPAR");
         $lexer->addSymbol("[", "LBRACKET");
         $lexer->addSymbol("]", "RBRACKET");
+        $lexer->addSymbol("{", "LBRACE");
+        $lexer->addSymbol("}", "RBRACE");
+        $lexer->addSymbol(",", "COMMA");
 
         $lexer->addTerminal("/[a-zA-Z_][a-zA-Z0-9_]*/", "ID");
         $lexer->addTerminal("/[1-9][0-9]*/", "INT");
 
         $lexer->addKeyword("let");
         $lexer->addKeyword("return");
+        $lexer->addKeyword("fn");
 
     }
 
@@ -95,6 +100,18 @@ class ApeBaseParser extends parsian\Parser
             return $res;
         });
 
+        $grammar->rule("expr_stmt",
+            $this->expr_stmt(),
+            false);
+
+        $grammar->setCustomRuleAst("expr_stmt", function (Ast $ast) {
+            $res = new Ast("expr_stmt", "");
+            $local_1 = $ast->getChildrenById("ex")[0];
+            $local_1->clearId();
+            $res->addChild($local_1);
+            return $res;
+        });
+
         $grammar->rule("expr",
             $this->expr(),
             false);
@@ -122,6 +139,27 @@ class ApeBaseParser extends parsian\Parser
             $child = $ast->getChildrenById("ex")[0];
             $child->clearId();
             return $child;
+        });
+
+        $grammar->rule("func_expr",
+            $this->func_expr(),
+            false);
+
+        $grammar->setCustomRuleAst("func_expr", function (Ast $ast) {
+            $res = new Ast("func_expr", "");
+            $local_1 = new Ast("params", "");
+            foreach ($ast->getChildrenById("p") as $local_2) {
+                $local_2->clearId();
+                $local_1->addChild($local_2);
+            }
+            $res->addChild($local_1);
+            $local_3 = new Ast("body", "");
+            foreach ($ast->getChildrenById("st") as $local_4) {
+                $local_4->clearId();
+                $local_3->addChild($local_4);
+            }
+            $res->addChild($local_3);
+            return $res;
         });
 
 
@@ -155,13 +193,23 @@ class ApeBaseParser extends parsian\Parser
             ->add($grammar->ruleRef("group"));
     }
 
+    private function factor()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->alt()
+            ->add($this->seq_3())
+            ->add($grammar->ruleRef("func_expr", "base"));
+    }
+
     private function stmt()
     {
         $grammar = $this->getGrammar();
 
         return $grammar->alt()
             ->add($grammar->ruleRef("let_stmt"))
-            ->add($grammar->ruleRef("return_stmt"));
+            ->add($grammar->ruleRef("return_stmt"))
+            ->add($grammar->ruleRef("expr_stmt"));
     }
 
 
@@ -174,13 +222,27 @@ class ApeBaseParser extends parsian\Parser
             ->add($grammar->many($this->seq_1()));
     }
 
-    private function factor()
+    private function expr_stmt()
     {
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
-            ->add($grammar->ruleRef("atom_expr", "base"))
-            ->add($grammar->many($this->seq_3()));
+            ->add($grammar->ruleRef("expr", "ex"))
+            ->add($grammar->term("SEMICOLON"));
+    }
+
+    private function func_expr()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
+            ->add($grammar->term("FN"))
+            ->add($grammar->term("LPAR"))
+            ->add($grammar->opt($this->seq_5()))
+            ->add($grammar->term("RPAR"))
+            ->add($grammar->term("LBRACE"))
+            ->add($grammar->many($grammar->ruleRef("stmt", "st")))
+            ->add($grammar->term("RBRACE"));
     }
 
     private function group()
@@ -247,9 +309,36 @@ class ApeBaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
+            ->add($grammar->ruleRef("atom_expr", "base"))
+            ->add($grammar->many($this->seq_4()));
+    }
+
+    private function seq_4()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
             ->add($grammar->term("LBRACKET"))
             ->add($grammar->ruleRef("expr", "idx"))
             ->add($grammar->term("RBRACKET"));
+    }
+
+    private function seq_5()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
+            ->add($grammar->ruleRef("expr", "p"))
+            ->add($grammar->many($this->seq_6()));
+    }
+
+    private function seq_6()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
+            ->add($grammar->term("COMMA"))
+            ->add($grammar->ruleRef("expr", "p"));
     }
 
 
