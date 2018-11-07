@@ -162,6 +162,19 @@ class ApeBaseParser extends parsian\Parser
             return $res;
         });
 
+        $grammar->rule("array_literal",
+            $this->array_literal(),
+            false);
+
+        $grammar->setCustomRuleAst("array_literal", function (Ast $ast) {
+            $res = new Ast("array", "");
+            foreach ($ast->getChildrenById("el") as $local_1) {
+                $local_1->clearId();
+                $res->addChild($local_1);
+            }
+            return $res;
+        });
+
 
     }
 
@@ -190,6 +203,7 @@ class ApeBaseParser extends parsian\Parser
         return $grammar->alt()
             ->add($grammar->term("INT"))
             ->add($grammar->term("ID"))
+            ->add($grammar->ruleRef("array_literal"))
             ->add($grammar->ruleRef("group"));
     }
 
@@ -212,6 +226,16 @@ class ApeBaseParser extends parsian\Parser
             ->add($grammar->ruleRef("expr_stmt"));
     }
 
+
+    private function array_literal()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
+            ->add($grammar->term("LBRACKET"))
+            ->add($grammar->opt($this->seq_7()))
+            ->add($grammar->term("RBRACKET"));
+    }
 
     private function expr()
     {
@@ -339,6 +363,24 @@ class ApeBaseParser extends parsian\Parser
         return $grammar->seq()
             ->add($grammar->term("COMMA"))
             ->add($grammar->ruleRef("expr", "p"));
+    }
+
+    private function seq_7()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
+            ->add($grammar->ruleRef("expr", "el"))
+            ->add($grammar->many($this->seq_8()));
+    }
+
+    private function seq_8()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
+            ->add($grammar->term("COMMA"))
+            ->add($grammar->ruleRef("expr", "el"));
     }
 
 

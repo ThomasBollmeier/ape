@@ -47,14 +47,14 @@ let_stmt -> 'let' name#ID EQ value#expr SEMICOLON
     ]
 };
 
-return_stmt -> 'return' value#expr SEMICOLON =>
-{
+return_stmt -> 'return' value#expr SEMICOLON
+=> {
     :name "return_stmt"
     :children [{:name "value" :children [#value]}]
 };
 
-expr_stmt -> ex#expr SEMICOLON =>
-{
+expr_stmt -> ex#expr SEMICOLON
+=> {
     :name "expr_stmt"
     :children [#ex]
 };
@@ -65,7 +65,7 @@ prod -> factor ((ASTERISK|SLASH) factor)*;
 
 factor -> base#atom_expr (LBRACKET idx#expr RBRACKET)* | base#func_expr;
 
-atom_expr -> INT | ID | group => child;
+atom_expr -> INT | ID | array_literal | group => child;
 
 group -> LPAR ex#expr RPAR => #ex;
 
@@ -85,4 +85,10 @@ func_expr -> 'fn' LPAR (p#expr (COMMA p#expr)*)? RPAR
             :children #st
         }
     ]
+};
+
+array_literal -> LBRACKET (el#expr (COMMA el#expr)*)? RBRACKET
+=> {
+    :name "array"
+    :children #el
 };

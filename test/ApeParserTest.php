@@ -35,6 +35,7 @@ let add = fn (a,b) {
     let y = b;
     return x +y;
 };
+let arr = [1, 2*1, 12/4];
 CODE;
 
         $ast = $this->parser->parseString($code);
