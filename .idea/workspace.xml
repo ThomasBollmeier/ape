@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grammar/ape.parsian" beforeDir="false" afterPath="$PROJECT_DIR$/grammar/ape.parsian" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ApeBaseParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApeBaseParser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ApeParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApeParser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/ApeParserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/ApeParserTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,12 +22,13 @@
     <session id="-781994588">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.30" value="2" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.32" value="1" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -35,13 +37,13 @@
           <entry key="gitignore" value="1" />
           <entry key="json" value="1" />
           <entry key="parsian" value="3" />
-          <entry key="php" value="12" />
+          <entry key="php" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="1" />
-          <entry key="PHP" value="12" />
+          <entry key="PHP" value="14" />
           <entry key="PLAIN_TEXT" value="5" />
         </counts>
       </usages-collector>
@@ -50,16 +52,16 @@
           <entry key="bat" value="41" />
           <entry key="gitignore" value="6" />
           <entry key="json" value="67" />
-          <entry key="parsian" value="1879" />
-          <entry key="php" value="1638" />
-          <entry key="txt" value="94" />
+          <entry key="parsian" value="3002" />
+          <entry key="php" value="3254" />
+          <entry key="txt" value="122" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="67" />
-          <entry key="PHP" value="1638" />
-          <entry key="PLAIN_TEXT" value="2020" />
+          <entry key="PHP" value="3254" />
+          <entry key="PLAIN_TEXT" value="3171" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.composer.actions">
@@ -90,38 +92,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="89" column="51" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ApeParser.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ApeBaseParser.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2278">
-              <caret line="139" column="12" selection-start-line="139" selection-start-column="12" selection-end-line="139" selection-end-column="12" />
-              <folding>
-                <element signature="e#6#155#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="-109">
+              <caret line="84" column="28" selection-start-line="84" selection-start-column="28" selection-end-line="84" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ApeParser.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/tbollmeier/parsian/src/output/Ast.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1411">
+              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/ApeParserTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+            <state relative-caret-position="344">
+              <caret line="44" column="24" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
               <folding>
                 <element signature="e#89#118#0#PHP" expanded="true" />
               </folding>
@@ -141,10 +140,10 @@
         <option value="$PROJECT_DIR$/grammar/genparser.bat" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/tbollmeier/ape/ApeParser.php" />
-        <option value="$PROJECT_DIR$/src/ApeParser.php" />
         <option value="$PROJECT_DIR$/src/ApeBaseParser.php" />
-        <option value="$PROJECT_DIR$/grammar/ape.parsian" />
         <option value="$PROJECT_DIR$/test/ApeParserTest.php" />
+        <option value="$PROJECT_DIR$/grammar/ape.parsian" />
+        <option value="$PROJECT_DIR$/src/ApeParser.php" />
       </list>
     </option>
   </component>
@@ -202,7 +201,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -225,10 +223,16 @@
               <item name="ape" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ape" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ape" type="462c0819:PsiDirectoryNode" />
+              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -281,7 +285,8 @@
       <workItem from="1541277712198" duration="3065000" />
       <workItem from="1541454741714" duration="400000" />
       <workItem from="1541533514623" duration="2002000" />
-      <workItem from="1541623966261" duration="438000" />
+      <workItem from="1541623966261" duration="599000" />
+      <workItem from="1541697264014" duration="6919000" />
     </task>
     <task id="LOCAL-00001" summary="Support for expressions">
       <created>1541280745162</created>
@@ -304,49 +309,56 @@
       <option name="project" value="LOCAL" />
       <updated>1541534841717</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="support for array literals">
+      <created>1541624471267</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1541624471267</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ApeParserTest - 2018.11.06 at 21h 01m 13s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 40m 56s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.06 at 21h 01m 42s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 41m 41s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.06 at 21h 04m 02s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 41m 51s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.06 at 21h 04m 47s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 43m 09s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.06 at 21h 05m 33s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 43m 23s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.06 at 21h 06m 42s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 43m 57s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.06 at 21h 08m 58s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 44m 51s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.07 at 21h 58m 19s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 21h 53m 18s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.07 at 21h 59m 18s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 22h 08m 49s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.07 at 21h 59m 27s.xml">
+    <history-entry file="ApeParserTest - 2018.11.08 at 22h 09m 39s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11464000" />
+    <option name="totallyTimeSpent" value="18544000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26639676" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27044535" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -366,6 +378,27 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27044535" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3291815" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.54270464" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3985765" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.3291815" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -377,7 +410,8 @@
     <MESSAGE value="Support for expressions" />
     <MESSAGE value="Grammar simplification" />
     <MESSAGE value="function expression support" />
-    <option name="LAST_COMMIT_MESSAGE" value="function expression support" />
+    <MESSAGE value="support for array literals" />
+    <option name="LAST_COMMIT_MESSAGE" value="support for array literals" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -411,11 +445,6 @@
         <state relative-caret-position="-1173" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/tbollmeier/parsian/src/output/Ast.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-969" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/tbollmeier/parsian/src/metagrammar/Parser.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4080" />
@@ -435,37 +464,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ApeParser.php">
+    <entry file="file://$PROJECT_DIR$/vendor/tbollmeier/parsian/src/grammar/RuleRef.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        <state relative-caret-position="77">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ApeBaseParser.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2278">
-          <caret line="139" column="12" selection-start-line="139" selection-start-column="12" selection-end-line="139" selection-end-column="12" />
+        <state relative-caret-position="-335">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
           <folding>
             <element signature="e#6#155#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="89" column="51" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/ApeParserTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+        <state relative-caret-position="344">
+          <caret line="44" column="24" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
           <folding>
             <element signature="e#89#118#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-109">
+          <caret line="84" column="28" selection-start-line="84" selection-start-column="28" selection-end-line="84" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/tbollmeier/parsian/src/output/Ast.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1411">
+          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ApeParser.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>

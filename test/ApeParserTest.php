@@ -36,6 +36,13 @@ let add = fn (a,b) {
     return x +y;
 };
 let arr = [1, 2*1, 12/4];
+let ego = {
+    "firstName": "Thomas",
+    "lastName": "Bollmeier"
+};
+let myName = ego["firstName"];
+fn (a, b) { return a*b; }(7,6);
+getPerson()["lastName"];
 CODE;
 
         $ast = $this->parser->parseString($code);

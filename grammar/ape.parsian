@@ -12,7 +12,7 @@ Author: Thomas Bollmeier <developer@thomas-bollmeier.de>
 
 comment '--' '\n';
 
-literal '"' '\\';
+literal '"' '#"';
 
 symbol EQ '=';
 symbol SEMICOLON ';';
@@ -27,6 +27,7 @@ symbol RBRACKET ']';
 symbol LBRACE '{';
 symbol RBRACE '}';
 symbol COMMA ',';
+symbol COLON ':';
 
 token ID /[a-zA-Z_][a-zA-Z0-9_]*/;
 token INT /[1-9][0-9]*/;
@@ -63,11 +64,15 @@ expr -> prod ((PLUS|MINUS) prod)*;
 
 prod -> factor ((ASTERISK|SLASH) factor)*;
 
-factor -> base#atom_expr (LBRACKET idx#expr RBRACKET)* | base#func_expr;
-
-atom_expr -> INT | ID | array_literal | group => child;
-
-group -> LPAR ex#expr RPAR => #ex;
+factor ->
+    idx_access_or_call |
+    array_literal |
+    map_literal |
+    func_expr |
+    ID |
+    INT |
+    STRING |
+    group => child;
 
 func_expr -> 'fn' LPAR (p#expr (COMMA p#expr)*)? RPAR
     LBRACE
@@ -77,7 +82,7 @@ func_expr -> 'fn' LPAR (p#expr (COMMA p#expr)*)? RPAR
     :name "func_expr"
     :children [
         {
-            :name "params"
+            :name "parameters"
             :children #p
         }
         {
@@ -92,3 +97,26 @@ array_literal -> LBRACKET (el#expr (COMMA el#expr)*)? RBRACKET
     :name "array"
     :children #el
 };
+
+map_literal -> LBRACE (entry (COMMA entry)*)? RBRACE
+=> {
+    :name "map"
+    :children .entry
+};
+
+entry -> key#expr COLON value#expr
+=> {
+    :name "entry"
+    :children [#key #value]
+};
+
+idx_access_or_call -> tgt#target
+    (LBRACKET idx#expr RBRACKET | LPAR (arg#expr (COMMA arg#expr)*)? RPAR)+;
+
+target ->
+    array_literal |
+    map_literal |
+    func_expr |
+    ID => child;
+
+group -> LPAR ex#expr RPAR => #ex;

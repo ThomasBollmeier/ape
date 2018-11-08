@@ -27,9 +27,13 @@ class ApeParser extends ApeBaseParser
             return new Ast("integer", $ast->getText());
         });
 
+        $g->setCustomTermAst("STRING", function (Ast $ast) {
+           return new Ast("string", $ast->getText());
+        });
+
         $g->setCustomRuleAst("expr", [$this, "transBinOp"]);
         $g->setCustomRuleAst("prod", [$this, "transBinOp"]);
-        $g->setCustomRuleAst("factor", [$this, "transFactor"]);
+        $g->setCustomRuleAst("idx_access_or_call", [$this, "transIdxAccessOrCall"]);
 
     }
 
@@ -67,17 +71,84 @@ class ApeParser extends ApeBaseParser
         return $ret;
     }
 
-    public function transFactor(Ast $ast) {
+    public function transIdxAccessOrCall(Ast $ast) {
 
-        $base = $ast->getChildrenById("base")[0];
-        $idxs = $ast->getChildrenById("idx");
+        $ret = null;
+        $target = null;
+        $argList = [];
 
-        if (count($idxs) == 0) {
-            $base->clearId();
-            return $base;
+        $children = $ast->getChildren();
+
+        foreach ($children as $child) {
+
+            if ($child->hasAttr("type")) {
+                $type_ = $child->getAttr("type");
+                switch ($type_) {
+                    case "LPAR":
+                        $argList = [];
+                        break;
+                    case "RPAR":
+                        $ret = $this->createCall($target, $argList);
+                        $target = $ret;
+                        $argList = [];
+                        break;
+                }
+            }
+
+            $id = $child->getId();
+
+            switch ($id) {
+                case "tgt":
+                    $target = $child;
+                    $target->clearId();
+                    break;
+                case "idx":
+                    $child->clearId();
+                    $ret = $this->createElemAccess($target, $child);
+                    $target = $ret;
+                    break;
+                case "arg":
+                    $child->clearId();
+                    $argList[] = $child;
+                    break;
+            }
         }
 
-        return $ast;
+        return $ret;
+
+    }
+
+    private function createElemAccess($targetExpr, $indexExpr) {
+
+        $ret = new Ast("element_access");
+
+        $cont = new Ast("container");
+        $ret->addChild($cont);
+        $cont->addChild($targetExpr);
+
+        $index = new Ast("index");
+        $ret->addChild($index);
+        $index->addChild($indexExpr);
+
+        return $ret;
+    }
+
+    private function createCall($calleeExpr, $argExprs) {
+
+        $ret = new Ast("call");
+
+        $callee = new Ast("callee");
+        $ret->addChild($callee);
+        $callee->addChild($calleeExpr);
+
+        $args = new Ast("arguments");
+        $ret->addChild($args);
+
+        foreach ($argExprs as $argExpr) {
+            $args->addChild($argExpr);
+        }
+
+        return $ret;
     }
 
 }
