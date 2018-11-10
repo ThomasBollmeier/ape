@@ -43,6 +43,21 @@ let ego = {
 let myName = ego["firstName"];
 fn (a, b) { return a*b; }(7,6);
 getPerson()["lastName"];
+
+if (isInitial) {
+    doInit();
+};
+
+if (started) stop();
+
+if (isEven(i)) {
+    doEvenThings();
+} else if (isOdd(i)) {
+    doOddThings();
+} else {
+    handleError();
+};
+
 CODE;
 
         $ast = $this->parser->parseString($code);

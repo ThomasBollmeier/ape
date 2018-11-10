@@ -65,6 +65,7 @@ expr -> prod ((PLUS|MINUS) prod)*;
 prod -> factor ((ASTERISK|SLASH) factor)*;
 
 factor ->
+    if_expr |
     idx_access_or_call |
     array_literal |
     map_literal |
@@ -89,6 +90,18 @@ func_expr -> 'fn' LPAR (p#expr (COMMA p#expr)*)? RPAR
             :name "body"
             :children #st
         }
+    ]
+};
+
+if_expr -> 'if' LPAR condition#expr RPAR
+    (LBRACE consequent#stmt+ RBRACE | consequent#expr)
+    ('else' (LBRACE alternative#stmt+ RBRACE | alternative#expr))?
+=> {
+    :name "if"
+    :children [
+        {:name "condition" :children #condition}
+        {:name "consequent" :children #consequent}
+        {:name "alternative" :children #alternative}
     ]
 };
 
