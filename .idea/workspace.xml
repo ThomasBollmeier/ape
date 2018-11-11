@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f063a5e-af7b-4770-8b71-1f2a43afd995" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/object/IObject.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/object/Integer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/object/ObjectType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grammar/ape.parsian" beforeDir="false" afterPath="$PROJECT_DIR$/grammar/ape.parsian" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApeBaseParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApeBaseParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/ApeParserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/ApeParserTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,14 +21,14 @@
     <session id="-781994588">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.30" value="2" />
-          <entry key="project.open.time.32" value="1" />
+          <entry key="project.open.time.32" value="2" />
           <entry key="project.open.time.36" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -37,31 +37,32 @@
           <entry key="gitignore" value="1" />
           <entry key="json" value="1" />
           <entry key="parsian" value="3" />
-          <entry key="php" value="14" />
+          <entry key="php" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="1" />
-          <entry key="PHP" value="14" />
+          <entry key="PHP" value="18" />
           <entry key="PLAIN_TEXT" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="bat" value="41" />
+          <entry key="dummy" value="1" />
           <entry key="gitignore" value="6" />
           <entry key="json" value="67" />
           <entry key="parsian" value="3343" />
-          <entry key="php" value="3544" />
-          <entry key="txt" value="157" />
+          <entry key="php" value="3803" />
+          <entry key="txt" value="190" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="67" />
-          <entry key="PHP" value="3544" />
-          <entry key="PLAIN_TEXT" value="3547" />
+          <entry key="PHP" value="3803" />
+          <entry key="PLAIN_TEXT" value="3581" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.composer.actions">
@@ -82,7 +83,7 @@
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.php.new.class">
         <counts>
-          <entry key="PHP Class.type" value="1" />
+          <entry key="PHP Class.type" value="4" />
         </counts>
       </usages-collector>
     </session>
@@ -90,36 +91,36 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="97" column="63" selection-start-line="97" selection-start-column="63" selection-end-line="97" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ApeParser.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/tbollmeier/parsian/src/output/Ast.php">
+        <entry file="file://$PROJECT_DIR$/src/object/IObject.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
-              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+              <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/object/Integer.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/object/ObjectType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/ApeParserTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
+            <state relative-caret-position="378">
               <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
               <folding>
                 <element signature="e#89#118#0#PHP" expanded="true" />
@@ -144,6 +145,9 @@
         <option value="$PROJECT_DIR$/src/ApeParser.php" />
         <option value="$PROJECT_DIR$/grammar/ape.parsian" />
         <option value="$PROJECT_DIR$/test/ApeParserTest.php" />
+        <option value="$PROJECT_DIR$/src/object/Object.php" />
+        <option value="$PROJECT_DIR$/src/object/ObjectType.php" />
+        <option value="$PROJECT_DIR$/src/object/Integer.php" />
       </list>
     </option>
   </component>
@@ -201,6 +205,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -221,18 +226,18 @@
             <path>
               <item name="ape" type="b2602c69:ProjectViewProjectNode" />
               <item name="ape" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="object" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ape" type="b2602c69:ProjectViewProjectNode" />
               <item name="ape" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -287,7 +292,8 @@
       <workItem from="1541533514623" duration="2002000" />
       <workItem from="1541623966261" duration="599000" />
       <workItem from="1541697264014" duration="7609000" />
-      <workItem from="1541883531581" duration="2204000" />
+      <workItem from="1541883531581" duration="2360000" />
+      <workItem from="1541933116746" duration="943000" />
     </task>
     <task id="LOCAL-00001" summary="Support for expressions">
       <created>1541280745162</created>
@@ -324,22 +330,17 @@
       <option name="project" value="LOCAL" />
       <updated>1541711745645</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="support for if-else">
+      <created>1541886321890</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1541886321890</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ApeParserTest - 2018.11.10 at 22h 31m 47s.xml">
-      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.10 at 22h 32m 09s.xml">
-      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.10 at 22h 32m 35s.xml">
-      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="ApeParserTest - 2018.11.10 at 22h 34m 15s.xml">
-      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
     <history-entry file="ApeParserTest - 2018.11.10 at 22h 35m 01s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
@@ -358,15 +359,27 @@
     <history-entry file="ApeParserTest - 2018.11.10 at 22h 42m 27s.xml">
       <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
+    <history-entry file="ApeParserTest - 2018.11.10 at 22h 43m 56s.xml">
+      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="ApeParserTest - 2018.11.11 at 11h 45m 29s.xml">
+      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="ApeParserTest - 2018.11.11 at 11h 56m 53s.xml">
+      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="ApeParserTest - 2018.11.11 at 12h 00m 01s.xml">
+      <configuration name="ApeParserTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21438000" />
+    <option name="totallyTimeSpent" value="22537000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27530363" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28016195" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -420,7 +433,8 @@
     <MESSAGE value="function expression support" />
     <MESSAGE value="support for array literals" />
     <MESSAGE value="support for function calls and element access" />
-    <option name="LAST_COMMIT_MESSAGE" value="support for function calls and element access" />
+    <MESSAGE value="support for if-else" />
+    <option name="LAST_COMMIT_MESSAGE" value="support for if-else" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -487,6 +501,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="97" column="63" selection-start-line="97" selection-start-column="63" selection-end-line="97" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/tbollmeier/parsian/src/output/Ast.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -496,25 +517,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ApeParser.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
+        <state relative-caret-position="1173">
           <caret line="74" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
+    <entry file="file://$PROJECT_DIR$/src/object/IObject.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="97" column="63" selection-start-line="97" selection-start-column="63" selection-end-line="97" selection-end-column="63" />
+        <state relative-caret-position="102">
+          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/ApeParserTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
+        <state relative-caret-position="378">
           <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
           <folding>
             <element signature="e#89#118#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/object/ObjectType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/object/Integer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
         </state>
       </provider>
     </entry>
