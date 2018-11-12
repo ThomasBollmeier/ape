@@ -11,6 +11,12 @@ namespace tbollmeier\ape\object;
 
 class Integer implements IObject
 {
+    private $value;
+
+    public function __construct(int $value)
+    {
+        $this->value = $value;
+    }
 
     public function getType()
     {
@@ -19,6 +25,6 @@ class Integer implements IObject
 
     public function toString()
     {
-        // TODO: Implement toString() method.
+        return sprintf("%d", $this->value);
     }
 }

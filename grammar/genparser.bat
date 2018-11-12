@@ -1,1 +1,1 @@
-php ..\vendor\tbollmeier\parsian\scripts\parsiangen.php --parser=ApeBaseParser --namespace=tbollmeier\ape --out=..\src\ApeBaseParser.php ape.parsian
+php ..\vendor\tbollmeier\parsian\scripts\parsiangen.php --parser=BaseParser --namespace=tbollmeier\ape\parser --out=..\src\parser\BaseParser.php ape.parsian

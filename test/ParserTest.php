@@ -6,17 +6,17 @@
  * Time: 22:29
  */
 
-use tbollmeier\ape\ApeParser;
+use tbollmeier\ape\parser\Parser;
 use PHPUnit\Framework\TestCase;
 
-class ApeParserTest extends TestCase
+class ParserTest extends TestCase
 {
     private $parser;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->parser = new ApeParser();
+        $this->parser = new Parser();
     }
 
     protected function tearDown()

@@ -6,11 +6,11 @@
  * Time: 22:27
  */
 
-namespace tbollmeier\ape;
+namespace tbollmeier\ape\parser;
 use tbollmeier\parsian\output\Ast;
 
 
-class ApeParser extends ApeBaseParser
+class Parser extends BaseParser
 {
 
     public function __construct()
