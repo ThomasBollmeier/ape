@@ -12,11 +12,30 @@ namespace tbollmeier\ape\interpreter;
 use tbollmeier\ape\object\IObject;
 use tbollmeier\ape\object\NullObject;
 use tbollmeier\ape\object\ObjectType;
+use tbollmeier\ape\parser\Parser;
 use tbollmeier\parsian\output\Ast;
 
 class Interpreter
 {
-    public function eval(Ast $ast, Environment $env) : IObject
+    private $parser;
+
+    public function __construct()
+    {
+        $this->parser = new Parser();
+    }
+
+    public function evalCode(string $program) : IObject
+    {
+        $ast = $this->parser->parseString($program);
+        if ($ast !== false) {
+            return $this->eval($ast, new Environment());
+        } else {
+            return new NullObject(); // TODO: return Error object
+        }
+    }
+
+
+    private function eval(Ast $ast, Environment $env) : IObject
     {
         $name = $ast->getName();
 

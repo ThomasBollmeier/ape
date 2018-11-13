@@ -9,29 +9,30 @@
 namespace tbollmeier\ape\interpreter;
 
 use PHPUnit\Framework\TestCase;
-use tbollmeier\ape\parser\Parser;
 
 class InterpreterTest extends TestCase
 {
-    private $parser;
     private $interpreter;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->parser = new Parser();
         $this->interpreter = new Interpreter();
     }
 
     protected function tearDown()
     {
         parent::tearDown();
-        $this->parser = null;
         $this->interpreter = null;
     }
 
-    public function testEval()
+    public function testInterpret()
     {
+        $code = <<<CODE
+1+2;
+CODE;
+        $result = $this->interpreter->evalCode($code);
+        print_r($result);
 
     }
 }
