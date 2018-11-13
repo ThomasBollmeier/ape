@@ -6,7 +6,8 @@
  * Time: 22:29
  */
 
-use tbollmeier\ape\parser\Parser;
+namespace tbollmeier\ape\parser;
+
 use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase

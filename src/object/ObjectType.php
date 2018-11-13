@@ -17,4 +17,7 @@ class ObjectType
     const FUNCTION = 4;
     const ARRAY = 5;
     const MAP = 6;
+    const NULL = 7;
+    const ERROR = 99;
+    const RETURN = 100;
 }

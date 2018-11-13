@@ -10,13 +10,54 @@ namespace tbollmeier\ape\interpreter;
 
 
 use tbollmeier\ape\object\IObject;
+use tbollmeier\ape\object\NullObject;
+use tbollmeier\ape\object\ObjectType;
 use tbollmeier\parsian\output\Ast;
 
 class Interpreter
 {
-    public function eval(Ast $apeProgramm, Environment $env) : IObject
+    public function eval(Ast $ast, Environment $env) : IObject
     {
-        return null;
+        $name = $ast->getName();
+
+        switch ($name) {
+            case "ape":
+                return $this->evalProgram($ast, $env);
+        }
+
+        return new NullObject();
+    }
+
+    private function evalProgram(Ast $program, Environment $env) : IObject
+    {
+        $statements = $program->getChildren();
+        $result = $this->evalBlock($statements, $env);
+        if ($result->getType() === ObjectType::RETURN) {
+            $result = $result->unwrap();
+        }
+
+        return $result;
+    }
+
+    private function evalBlock(array $statements, Environment $env) : IObject
+    {
+        $result = new NullObject();
+        $n = count($statements);
+
+        for ($i = 0; $i<$n; $i++) {
+            $res = $this->eval($statements[$i], $env);
+            if ($i < $n-1) {
+                $type_ = $res->getType();
+                if ($type_ === ObjectType::RETURN || $type_ === ObjectType::ERROR) {
+                    $result = $res;
+                    break;
+                }
+            } else { // last statement evaluates to implicit return value
+                $result = $res;
+            }
+        }
+
+        return $result;
     }
 
 }
