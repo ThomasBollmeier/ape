@@ -22,17 +22,28 @@ class Parser extends BaseParser
         $g->setCustomTermAst("ID", function (Ast $ast) {
             return new Ast("identifier", $ast->getText());
         });
-
         $g->setCustomTermAst("INT", function (Ast $ast) {
             return new Ast("integer", $ast->getText());
         });
-
         $g->setCustomTermAst("STRING", function (Ast $ast) {
            return new Ast("string", $ast->getText());
+        });
+        $g->setCustomTermAst("NULL", function (Ast $ast) {
+            return new Ast("null");
+        });
+        $g->setCustomTermAst("TRUE", function (Ast $ast) {
+            return new Ast("true");
+        });
+        $g->setCustomTermAst("FALSE", function (Ast $ast) {
+            return new Ast("false");
         });
 
         $g->setCustomRuleAst("expr", [$this, "transBinOp"]);
         $g->setCustomRuleAst("prod", [$this, "transBinOp"]);
+        $g->setCustomRuleAst("disjunction", [$this, "transDisjunction"]);
+        $g->setCustomRuleAst("conjunction", [$this, "transConjunction"]);
+        $g->setCustomRuleAst("logic_rel", [$this, "transLogicRel"]);
+        $g->setCustomRuleAst("operand", [$this, "transOperand"]);
         $g->setCustomRuleAst("idx_access_or_call", [$this, "transIdxAccessOrCall"]);
 
     }
@@ -71,7 +82,88 @@ class Parser extends BaseParser
         return $ret;
     }
 
-    public function transIdxAccessOrCall(Ast $ast) {
+    public function transDisjunction(Ast $ast)
+    {
+        $ret = null;
+        $conjunctions = $ast->getChildrenById("conj");
+        if (count($conjunctions) == 1) {
+            $ret = $conjunctions[0];
+            $ret->clearId();
+        } else {
+            $ret = new Ast("or");
+            foreach ($conjunctions as $conjunction) {
+                $conjunction->clearId();
+                $ret->addChild($conjunction);
+            }
+        }
+
+        return $ret;
+    }
+
+    public function transConjunction(Ast $ast)
+    {
+        $ret = null;
+        $conjunctions = $ast->getChildrenById("elem");
+        if (count($conjunctions) == 1) {
+            $ret = $conjunctions[0];
+            $ret->clearId();
+        } else {
+            $ret = new Ast("and");
+            foreach ($conjunctions as $conjunction) {
+                $conjunction->clearId();
+                $ret->addChild($conjunction);
+            }
+        }
+
+        return $ret;
+    }
+
+    public function transLogicRel(Ast $ast)
+    {
+        $ret = null;
+        $children = $ast->getChildren();
+        switch (count($children)) {
+            case 1:
+                $ret = $children[0];
+                break;
+            default:
+                $ret = new Ast("logic_relation");
+                list($left, $op, $right) = $children;
+                $ret->setAttr("operator", $op->getText());
+                $ret->addChild($left);
+                $ret->addChild($right);
+        }
+
+        return $ret;
+    }
+
+    public function transOperand(Ast $ast)
+    {
+        $ret = null;
+        $children = $ast->getChildren();
+
+        switch (count($children)) {
+            case 1:
+                $ret = $children[0];
+                break;
+            case 2:
+                list($unaryOp, $value) = $children;
+                switch ($unaryOp->getAttr("type")) {
+                    case "NOT":
+                        $ret = new Ast("not");
+                        break;
+                    default:
+                        $ret = new Ast("negative");
+                }
+                $ret->addChild($value);
+                break;
+        }
+
+        return $ret;
+    }
+
+    public function transIdxAccessOrCall(Ast $ast)
+    {
 
         $ret = null;
         $target = null;
@@ -118,7 +210,8 @@ class Parser extends BaseParser
 
     }
 
-    private function createElemAccess($targetExpr, $indexExpr) {
+    private function createElemAccess($targetExpr, $indexExpr)
+    {
 
         $ret = new Ast("element_access");
 
@@ -133,7 +226,8 @@ class Parser extends BaseParser
         return $ret;
     }
 
-    private function createCall($calleeExpr, $argExprs) {
+    private function createCall($calleeExpr, $argExprs)
+    {
 
         $ret = new Ast("call");
 

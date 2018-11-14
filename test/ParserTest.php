@@ -59,6 +59,16 @@ if (isEven(i)) {
     handleError();
 };
 
+let started = false;
+!started;
+
+1 == 2;
+1 < 2;
+1>2;
+
+2 != -3 && (answer == 42 || !test) && true || false;
+
+let nothing = null;
 CODE;
 
         $ast = $this->parser->parseString($code);

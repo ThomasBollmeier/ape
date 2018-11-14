@@ -4,7 +4,7 @@ Grammar of APE
 APE is a PHP implementation of the Monkey programming language
 invented by Thorsten Ball (see https://interpreterbook.com/ for details)
 
-Version: 0.1
+Version: 0.5
 Author: Thomas Bollmeier <developer@thomas-bollmeier.de>
 *)
 
@@ -14,7 +14,14 @@ comment '--' '\n';
 
 literal '"' '#"';
 
+symbol EQ2 '==';
+symbol NE '!=';
+symbol GT '>';
+symbol LT '<';
+symbol NOT '!';
 symbol EQ '=';
+symbol OR '||';
+symbol AND '&&';
 symbol SEMICOLON ';';
 symbol PLUS '+';
 symbol MINUS '-';
@@ -62,18 +69,30 @@ expr_stmt -> ex#expr SEMICOLON
 
 expr -> prod ((PLUS|MINUS) prod)*;
 
-prod -> factor ((ASTERISK|SLASH) factor)*;
+prod -> disjunction ((ASTERISK|SLASH) disjunction)*;
 
-factor ->
+disjunction -> conj#conjunction (OR conj#conjunction)*;
+
+conjunction -> elem#logic_rel (AND elem#logic_rel)*;
+
+logic_rel -> operand ((EQ2 | NE | GT | LT) operand)?;
+
+operand -> (NOT|MINUS)? atom_expr;
+
+atom_expr ->
     if_expr |
     idx_access_or_call |
     array_literal |
     map_literal |
     func_expr |
+    boolean |
+    'null' |
     ID |
     INT |
     STRING |
     group => child;
+
+boolean -> 'true' | 'false' => child;
 
 func_expr -> 'fn' LPAR (p#expr (COMMA p#expr)*)? RPAR
     LBRACE
