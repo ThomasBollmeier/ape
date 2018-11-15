@@ -60,14 +60,12 @@ if (isEven(i)) {
 };
 
 let started = false;
-!started;
+!!started;
 
 1 == 2;
 1 < 2;
 1>2;
-
-2 != -3 && (answer == 42 || !test) && true || false;
-
+2 != --3 && (answer == 42 || !test) && true || false;
 let nothing = null;
 CODE;
 

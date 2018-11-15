@@ -10,7 +10,7 @@ Author: Thomas Bollmeier <developer@thomas-bollmeier.de>
 
 -- Lexical elements
 
-comment '--' '\n';
+comment '//' '\n';
 
 literal '"' '#"';
 
@@ -77,7 +77,7 @@ conjunction -> elem#logic_rel (AND elem#logic_rel)*;
 
 logic_rel -> operand ((EQ2 | NE | GT | LT) operand)?;
 
-operand -> (NOT|MINUS)? atom_expr;
+operand -> (NOT|MINUS) operand | atom_expr;
 
 atom_expr ->
     if_expr |
