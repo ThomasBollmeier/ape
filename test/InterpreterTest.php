@@ -6,9 +6,13 @@
  * Time: 08:05
  */
 
+
 namespace tbollmeier\ape\interpreter;
 
+require_once "../vendor/autoload.php";
+
 use PHPUnit\Framework\TestCase;
+
 
 class InterpreterTest extends TestCase
 {
@@ -29,10 +33,16 @@ class InterpreterTest extends TestCase
     public function testInterpret()
     {
         $code = <<<CODE
-1+2;
+41 + 1;
 CODE;
+        /*
+        $parser = new \tbollmeier\ape\parser\Parser();
+        $ast = $parser->parseString($code);
+        print($ast->toXml());
+        */
+
         $result = $this->interpreter->evalCode($code);
-        print_r($result);
+        print($result->toString());
 
     }
 }

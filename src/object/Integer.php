@@ -18,6 +18,14 @@ class Integer implements IObject
         $this->value = $value;
     }
 
+    /**
+     * @return int
+     */
+    public function getValue(): int
+    {
+        return $this->value;
+    }
+
     public function getType()
     {
         return ObjectType::INTEGER;

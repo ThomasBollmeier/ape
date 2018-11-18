@@ -30,6 +30,7 @@ class ParserTest extends TestCase
 
         $code = <<<CODE
 let answer = (1 + 2 + 4) * 2 * 3;
+1 --2;
 return 23;
 let add = fn (a,b) {
     let x = a;

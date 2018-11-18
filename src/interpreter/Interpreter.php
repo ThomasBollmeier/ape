@@ -9,6 +9,9 @@
 namespace tbollmeier\ape\interpreter;
 
 
+use function Couchbase\defaultDecoder;
+use tbollmeier\ape\object\ErrorObject;
+use tbollmeier\ape\object\Integer;
 use tbollmeier\ape\object\IObject;
 use tbollmeier\ape\object\NullObject;
 use tbollmeier\ape\object\ObjectType;
@@ -24,13 +27,16 @@ class Interpreter
         $this->parser = new Parser();
     }
 
-    public function evalCode(string $program) : IObject
+    public function evalCode(string $program, Environment $env = null) : IObject
     {
         $ast = $this->parser->parseString($program);
         if ($ast !== false) {
-            return $this->eval($ast, new Environment());
+            if ($env === null) {
+                $env = new Environment();
+            }
+            return $this->eval($ast, $env);
         } else {
-            return new NullObject(); // TODO: return Error object
+            return new ErrorObject($this->parser->error());
         }
     }
 
@@ -42,6 +48,12 @@ class Interpreter
         switch ($name) {
             case "ape":
                 return $this->evalProgram($ast, $env);
+            case "expr_stmt":
+                return $this->evalExprStmt($ast, $env);
+            case "binop":
+                return $this->evalBinaryOp($ast, $env);
+            case "integer":
+                return $this->evalInteger($ast);
         }
 
         return new NullObject();
@@ -77,6 +89,40 @@ class Interpreter
         }
 
         return $result;
+    }
+
+    private function evalExprStmt(Ast $ast, Environment $env) : IObject
+    {
+        $expr = $ast->getChildren()[0];
+        return $this->eval($expr, $env);
+    }
+
+    private function evalInteger(Ast $ast) : IObject
+    {
+        $value = intval($ast->getText());
+        return new Integer($value);
+    }
+
+    private function evalBinaryOp(Ast $ast, Environment $env) : IObject
+    {
+        $op = $ast->getAttr("operator");
+        list($leftNode, $rightNode) = $ast->getChildren();
+        $left = $this->eval($leftNode, $env);
+        $right = $this->eval($rightNode, $env);
+
+        switch ($op) {
+            case "+":
+                if ($left->getType() == ObjectType::INTEGER &&
+                    $right->getType() == ObjectType::INTEGER) {
+                    return new Integer($left->getValue() + $right->getValue());
+                } else {
+                    return new ErrorObject("unsupported operand types for $op");
+                }
+                break;
+            default:
+                return new ErrorObject("unknown operator '$op'");
+        }
+
     }
 
 }
