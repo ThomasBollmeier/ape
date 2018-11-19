@@ -21,7 +21,7 @@ class Integer implements IObject
     /**
      * @return int
      */
-    public function getValue(): int
+    public function getInt(): int
     {
         return $this->value;
     }

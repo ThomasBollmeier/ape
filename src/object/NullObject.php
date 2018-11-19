@@ -11,6 +11,20 @@ namespace tbollmeier\ape\object;
 
 class NullObject implements IObject
 {
+    private static $single = null;
+
+    public static function getInstance() : NullObject
+    {
+        if (static::$single == null) {
+            static::$single = new NullObject();
+        }
+
+        return static::$single;
+    }
+
+    private function __construct()
+    {
+    }
 
     public function getType()
     {

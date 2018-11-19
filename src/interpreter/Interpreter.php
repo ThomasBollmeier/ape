@@ -9,7 +9,7 @@
 namespace tbollmeier\ape\interpreter;
 
 
-use function Couchbase\defaultDecoder;
+use tbollmeier\ape\object\Boolean;
 use tbollmeier\ape\object\ErrorObject;
 use tbollmeier\ape\object\Integer;
 use tbollmeier\ape\object\IObject;
@@ -50,13 +50,23 @@ class Interpreter
                 return $this->evalProgram($ast, $env);
             case "expr_stmt":
                 return $this->evalExprStmt($ast, $env);
+            case "negative":
+                return $this->evalNegative($ast, $env);
+            case "not":
+                return $this->evalNot($ast, $env);
             case "binop":
                 return $this->evalBinaryOp($ast, $env);
             case "integer":
                 return $this->evalInteger($ast);
+            case "null":
+                return NullObject::getInstance();
+            case "true":
+                return Boolean::getTrue();
+            case "false":
+                return Boolean::getFalse();
         }
 
-        return new NullObject();
+        return NullObject::getInstance();
     }
 
     private function evalProgram(Ast $program, Environment $env) : IObject
@@ -72,7 +82,7 @@ class Interpreter
 
     private function evalBlock(array $statements, Environment $env) : IObject
     {
-        $result = new NullObject();
+        $result = NullObject::getInstance();
         $n = count($statements);
 
         for ($i = 0; $i<$n; $i++) {
@@ -114,7 +124,31 @@ class Interpreter
             case "+":
                 if ($left->getType() == ObjectType::INTEGER &&
                     $right->getType() == ObjectType::INTEGER) {
-                    return new Integer($left->getValue() + $right->getValue());
+                    return new Integer($left->getInt() + $right->getInt());
+                } else {
+                    return new ErrorObject("unsupported operand types for $op");
+                }
+                break;
+            case "-":
+                if ($left->getType() == ObjectType::INTEGER &&
+                    $right->getType() == ObjectType::INTEGER) {
+                    return new Integer($left->getInt() - $right->getInt());
+                } else {
+                    return new ErrorObject("unsupported operand types for $op");
+                }
+                break;
+            case "*":
+                if ($left->getType() == ObjectType::INTEGER &&
+                    $right->getType() == ObjectType::INTEGER) {
+                    return new Integer($left->getInt() * $right->getInt());
+                } else {
+                    return new ErrorObject("unsupported operand types for $op");
+                }
+                break;
+            case "/":
+                if ($left->getType() == ObjectType::INTEGER &&
+                    $right->getType() == ObjectType::INTEGER) {
+                    return new Integer($left->getInt() / $right->getInt());
                 } else {
                     return new ErrorObject("unsupported operand types for $op");
                 }
@@ -123,6 +157,30 @@ class Interpreter
                 return new ErrorObject("unknown operator '$op'");
         }
 
+    }
+
+    private function evalNegative(Ast $ast, Environment $env)
+    {
+        $child = $ast->getChildren()[0];
+        $value = $this->eval($child, $env);
+
+        if ($value->getType() != ObjectType::INTEGER) {
+            return new ErrorObject("Unary operator '-' can only be applied to integers");
+        }
+
+        return new Integer(-$value->getInt());
+    }
+
+    private function evalNot(Ast $ast, Environment $env)
+    {
+        $child = $ast->getChildren()[0];
+        $value = $this->eval($child, $env);
+
+        if ($value->getType() != ObjectType::BOOLEAN) {
+            return new ErrorObject("Unary operator '!' can only be applied to booleans");
+        }
+
+        return !$value->getBool() ? Boolean::getTrue() : Boolean::getFalse();
     }
 
 }

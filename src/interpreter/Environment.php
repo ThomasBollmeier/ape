@@ -38,4 +38,32 @@ class Environment
         return null;
     }
 
+    public function clone() : Environment
+    {
+        $ret = new Environment();
+        $ret->symbols = $this->getAllSymbols();
+
+        return $ret;
+    }
+
+    private function getAllSymbols()
+    {
+        $ret = [];
+
+        $envs = [];
+        $env = $this;
+        while ($env !== null) {
+            $envs = array_merge([$env], $envs);
+            $env = $env->outer;
+        }
+
+        foreach ($envs as $env) {
+            foreach ($env->symbols as $name => $value) {
+                $ret[$name] = $value;
+            }
+        }
+
+        return $ret;
+    }
+
 }
