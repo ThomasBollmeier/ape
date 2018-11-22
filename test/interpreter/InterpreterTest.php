@@ -35,24 +35,33 @@ class InterpreterTest extends TestCase
 
     public function testInterpret()
     {
-        $this->assertStatement("null;", NullObject::getInstance());
-        $this->assertStatement("true;", Boolean::getTrue());
-        $this->assertStatement("false;", Boolean::getFalse());
-        $this->assertStatement("!!true;", Boolean::getTrue());
-        $this->assertStatement("!false;", Boolean::getTrue());
-        $this->assertStatement("--42;", new Integer(42));
-        $this->assertStatement("41+1;", new Integer(42));
-        $this->assertStatement("43-1;", new Integer(42));
-        $this->assertStatement("7*6;", new Integer(42));
-        $this->assertStatement("85 / 2;", new Integer(42));
-        $this->assertStatement("7*(2+3) + 7;", new Integer(42));
+        $this->assertResult("null;", NullObject::getInstance());
+        $this->assertResult("true;", Boolean::getTrue());
+        $this->assertResult("false;", Boolean::getFalse());
+        $this->assertResult("!!true;", Boolean::getTrue());
+        $this->assertResult("!false;", Boolean::getTrue());
+        $this->assertResult("!null;", Boolean::getTrue());
+        $this->assertResult("!42;", Boolean::getFalse());
+        $this->assertResult("--42;", new Integer(42));
+        $this->assertResult("41+1;", new Integer(42));
+        $this->assertResult("43-1;", new Integer(42));
+        $this->assertResult("7*6;", new Integer(42));
+        $this->assertResult("85 / 2;", new Integer(42));
+        $this->assertResult("7*(2+3) + 7;", new Integer(42));
+        $this->assertResult("41 == 42;", Boolean::getFalse());
+        $this->assertResult("(41 + 1) == 42;", Boolean::getTrue());
+        $this->assertResult("!((41 + 1) == 42);", Boolean::getFalse());
     }
 
-    private function assertStatement(string $stmt, IObject $expResult)
+    private function assertResult(string $stmt, IObject $expResult)
     {
 
         $parser = new Parser();
         $ast = $parser->parseString($stmt);
+        if ($ast === false) {
+            print($parser->error() . "\n");
+            return;
+        }
         print($ast->toXml());
 
         $result = $this->interpreter->evalCode($stmt);

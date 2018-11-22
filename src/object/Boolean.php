@@ -15,6 +15,11 @@ class Boolean implements IObject
     private static $false = null;
     private $value;
 
+    public static function toBoolean(bool $value)
+    {
+        return $value ? self::getTrue(): self::getFalse();
+    }
+
     public static function getTrue()
     {
         if (static::$true == null) {

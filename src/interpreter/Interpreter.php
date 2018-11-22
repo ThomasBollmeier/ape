@@ -56,6 +56,8 @@ class Interpreter
                 return $this->evalNot($ast, $env);
             case "binop":
                 return $this->evalBinaryOp($ast, $env);
+            case "logic_relation":
+                return $this->evalLogicalRel($ast, $env);
             case "integer":
                 return $this->evalInteger($ast);
             case "null":
@@ -159,6 +161,37 @@ class Interpreter
 
     }
 
+    private function evalLogicalRel(Ast $ast, Environment $env) : IObject
+    {
+        $op = $ast->getAttr("operator");
+        list($leftNode, $rightNode) = $ast->getChildren();
+        $left = $this->eval($leftNode, $env);
+        $right = $this->eval($rightNode, $env);
+
+        // Currently only support for integer comparisons:
+        if ($left->getType() != ObjectType::INTEGER ||
+            $right->getType() != ObjectType::INTEGER) {
+            return new ErrorObject("Only integers supported in comparisons");
+        }
+
+        $lval = $left->getInt();
+        $rval = $right->getInt();
+
+        switch ($op) {
+            case "==":
+                return Boolean::toBoolean($lval == $rval);
+            case "!=":
+                return Boolean::toBoolean($lval != $rval);
+            case ">":
+                return Boolean::toBoolean($lval > $rval);
+            case "<":
+                return Boolean::toBoolean($lval < $rval);
+        }
+
+        return new ErrorObject("Unsupported logical operator");
+
+    }
+
     private function evalNegative(Ast $ast, Environment $env)
     {
         $child = $ast->getChildren()[0];
@@ -174,13 +207,21 @@ class Interpreter
     private function evalNot(Ast $ast, Environment $env)
     {
         $child = $ast->getChildren()[0];
-        $value = $this->eval($child, $env);
-
-        if ($value->getType() != ObjectType::BOOLEAN) {
-            return new ErrorObject("Unary operator '!' can only be applied to booleans");
-        }
+        $value = $this->getTruthy($this->eval($child, $env));
 
         return !$value->getBool() ? Boolean::getTrue() : Boolean::getFalse();
+    }
+
+    private function getTruthy(IObject $value) : Boolean
+    {
+        switch ($value->getType()) {
+            case ObjectType::BOOLEAN:
+                return $value;
+            case ObjectType::NULL:
+                return Boolean::getFalse();
+            default:
+                return Boolean::getTrue();
+        }
     }
 
 }
