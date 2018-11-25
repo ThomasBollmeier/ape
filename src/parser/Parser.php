@@ -38,12 +38,12 @@ class Parser extends BaseParser
             return new Ast("false");
         });
 
-        $g->setCustomRuleAst("expr", [$this, "transBinOp"]);
-        $g->setCustomRuleAst("prod", [$this, "transBinOp"]);
         $g->setCustomRuleAst("disjunction", [$this, "transDisjunction"]);
         $g->setCustomRuleAst("conjunction", [$this, "transConjunction"]);
         $g->setCustomRuleAst("logic_rel", [$this, "transLogicRel"]);
-        $g->setCustomRuleAst("operand", [$this, "transOperand"]);
+        $g->setCustomRuleAst("sum", [$this, "transBinOp"]);
+        $g->setCustomRuleAst("prod", [$this, "transBinOp"]);
+        $g->setCustomRuleAst("factor", [$this, "transFactor"]);
         $g->setCustomRuleAst("idx_access_or_call", [$this, "transIdxAccessOrCall"]);
 
     }
@@ -137,7 +137,7 @@ class Parser extends BaseParser
         return $ret;
     }
 
-    public function transOperand(Ast $ast)
+    public function transFactor(Ast $ast)
     {
         $ret = null;
         $children = $ast->getChildren();

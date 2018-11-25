@@ -56,6 +56,10 @@ class Interpreter
                 return $this->evalNot($ast, $env);
             case "binop":
                 return $this->evalBinaryOp($ast, $env);
+            case "or":
+                return $this->evalDisjunction($ast, $env);
+            case "and":
+                return $this->evalConjunction($ast, $env);
             case "logic_relation":
                 return $this->evalLogicalRel($ast, $env);
             case "integer":
@@ -159,6 +163,40 @@ class Interpreter
                 return new ErrorObject("unknown operator '$op'");
         }
 
+    }
+
+    private function evalDisjunction(Ast $ast, Environment $env) : IObject
+    {
+        $children = $ast->getChildren();
+
+        foreach ($children as $child) {
+            $expr = $this->eval($child, $env);
+            if (!$expr->getType() == ObjectType::BOOLEAN) {
+                return new ErrorObject("Disjunction requires boolean operands");
+            }
+            if ($expr->getBool()) {
+                return Boolean::getTrue();
+            }
+        }
+
+        return Boolean::getFalse();
+    }
+
+    private function evalConjunction(Ast $ast, Environment $env) : IObject
+    {
+        $children = $ast->getChildren();
+
+        foreach ($children as $child) {
+            $expr = $this->eval($child, $env);
+            if (!$expr->getType() == ObjectType::BOOLEAN) {
+                return new ErrorObject("Conjunction requires boolean operands");
+            }
+            if (!$expr->getBool()) {
+                return Boolean::getFalse();
+            }
+        }
+
+        return Boolean::getTrue();
     }
 
     private function evalLogicalRel(Ast $ast, Environment $env) : IObject

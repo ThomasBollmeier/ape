@@ -49,8 +49,12 @@ class InterpreterTest extends TestCase
         $this->assertResult("85 / 2;", new Integer(42));
         $this->assertResult("7*(2+3) + 7;", new Integer(42));
         $this->assertResult("41 == 42;", Boolean::getFalse());
-        $this->assertResult("(41 + 1) == 42;", Boolean::getTrue());
-        $this->assertResult("!((41 + 1) == 42);", Boolean::getFalse());
+        $this->assertResult("41 + 1 == 42;", Boolean::getTrue());
+        $this->assertResult("!(41 + 1 == 42);", Boolean::getFalse());
+        $this->assertResult("41 + 1 == 42 && 3 > 4;", Boolean::getFalse());
+        $this->assertResult("1 == 1 && 4 != 2*2 || 10 < 99;", Boolean::getTrue());
+        $this->assertResult("1 == 1 && (4 != 2*2 || 10 < 99);", Boolean::getTrue());
+
     }
 
     private function assertResult(string $stmt, IObject $expResult)

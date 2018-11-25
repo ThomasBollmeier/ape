@@ -68,6 +68,8 @@ let started = false;
 1>2;
 2 != --3 && (answer == 42 || !test) && true || false;
 let nothing = null;
+
+1 == 1 && 4 != 2*2 || 10 < 99;
 CODE;
 
         $ast = $this->parser->parseString($code);

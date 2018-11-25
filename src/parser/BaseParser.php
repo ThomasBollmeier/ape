@@ -126,11 +126,15 @@ class BaseParser extends parsian\Parser
         });
 
         $grammar->rule("expr",
-            $this->expr(),
+            $grammar->ruleRef("disjunction"),
             false);
-        $grammar->rule("prod",
-            $this->prod(),
-            false);
+
+        $grammar->setCustomRuleAst("expr", function (Ast $ast) {
+            $child = $ast->getChildren()[0];
+            $child->clearId();
+            return $child;
+        });
+
         $grammar->rule("disjunction",
             $this->disjunction(),
             false);
@@ -140,8 +144,14 @@ class BaseParser extends parsian\Parser
         $grammar->rule("logic_rel",
             $this->logic_rel(),
             false);
-        $grammar->rule("operand",
-            $this->operand(),
+        $grammar->rule("sum",
+            $this->sum(),
+            false);
+        $grammar->rule("prod",
+            $this->prod(),
+            false);
+        $grammar->rule("factor",
+            $this->factor(),
             false);
         $grammar->rule("atom_expr",
             $this->atom_expr(),
@@ -283,8 +293,10 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->alt()
-            ->add($grammar->term("PLUS"))
-            ->add($grammar->term("MINUS"));
+            ->add($grammar->term("EQ2"))
+            ->add($grammar->term("NE"))
+            ->add($grammar->term("GT"))
+            ->add($grammar->term("LT"));
     }
 
     private function alt_2()
@@ -292,8 +304,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->alt()
-            ->add($grammar->term("ASTERISK"))
-            ->add($grammar->term("SLASH"));
+            ->add($grammar->term("PLUS"))
+            ->add($grammar->term("MINUS"));
     }
 
     private function alt_3()
@@ -301,10 +313,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->alt()
-            ->add($grammar->term("EQ2"))
-            ->add($grammar->term("NE"))
-            ->add($grammar->term("GT"))
-            ->add($grammar->term("LT"));
+            ->add($grammar->term("ASTERISK"))
+            ->add($grammar->term("SLASH"));
     }
 
     private function alt_4()
@@ -370,7 +380,7 @@ class BaseParser extends parsian\Parser
             ->add($grammar->term("FALSE"));
     }
 
-    private function operand()
+    private function factor()
     {
         $grammar = $this->getGrammar();
 
@@ -417,7 +427,7 @@ class BaseParser extends parsian\Parser
 
         return $grammar->seq()
             ->add($grammar->ruleRef("logic_rel", "elem"))
-            ->add($grammar->many($this->seq_4()));
+            ->add($grammar->many($this->seq_2()));
     }
 
     private function disjunction()
@@ -426,7 +436,7 @@ class BaseParser extends parsian\Parser
 
         return $grammar->seq()
             ->add($grammar->ruleRef("conjunction", "conj"))
-            ->add($grammar->many($this->seq_3()));
+            ->add($grammar->many($this->seq_1()));
     }
 
     private function entry()
@@ -437,15 +447,6 @@ class BaseParser extends parsian\Parser
             ->add($grammar->ruleRef("expr", "key"))
             ->add($grammar->term("COLON"))
             ->add($grammar->ruleRef("expr", "value"));
-    }
-
-    private function expr()
-    {
-        $grammar = $this->getGrammar();
-
-        return $grammar->seq()
-            ->add($grammar->ruleRef("prod"))
-            ->add($grammar->many($this->seq_1()));
     }
 
     private function expr_stmt()
@@ -520,8 +521,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
-            ->add($grammar->ruleRef("operand"))
-            ->add($grammar->opt($this->seq_5()));
+            ->add($grammar->ruleRef("sum"))
+            ->add($grammar->opt($this->seq_3()));
     }
 
     private function map_literal()
@@ -539,8 +540,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
-            ->add($grammar->ruleRef("disjunction"))
-            ->add($grammar->many($this->seq_2()));
+            ->add($grammar->ruleRef("factor"))
+            ->add($grammar->many($this->seq_5()));
     }
 
     private function return_stmt()
@@ -558,8 +559,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
-            ->add($this->alt_1())
-            ->add($grammar->ruleRef("prod"));
+            ->add($grammar->term("OR"))
+            ->add($grammar->ruleRef("conjunction", "conj"));
     }
 
     private function seq_10()
@@ -660,8 +661,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
-            ->add($this->alt_2())
-            ->add($grammar->ruleRef("disjunction"));
+            ->add($grammar->term("AND"))
+            ->add($grammar->ruleRef("logic_rel", "elem"));
     }
 
     private function seq_3()
@@ -669,8 +670,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
-            ->add($grammar->term("OR"))
-            ->add($grammar->ruleRef("conjunction", "conj"));
+            ->add($this->alt_1())
+            ->add($grammar->ruleRef("sum"));
     }
 
     private function seq_4()
@@ -678,8 +679,8 @@ class BaseParser extends parsian\Parser
         $grammar = $this->getGrammar();
 
         return $grammar->seq()
-            ->add($grammar->term("AND"))
-            ->add($grammar->ruleRef("logic_rel", "elem"));
+            ->add($this->alt_2())
+            ->add($grammar->ruleRef("prod"));
     }
 
     private function seq_5()
@@ -688,7 +689,7 @@ class BaseParser extends parsian\Parser
 
         return $grammar->seq()
             ->add($this->alt_3())
-            ->add($grammar->ruleRef("operand"));
+            ->add($grammar->ruleRef("factor"));
     }
 
     private function seq_6()
@@ -697,7 +698,7 @@ class BaseParser extends parsian\Parser
 
         return $grammar->seq()
             ->add($this->alt_4())
-            ->add($grammar->ruleRef("operand"));
+            ->add($grammar->ruleRef("factor"));
     }
 
     private function seq_7()
@@ -726,6 +727,15 @@ class BaseParser extends parsian\Parser
             ->add($grammar->term("LBRACE"))
             ->add($grammar->oneOrMore($grammar->ruleRef("stmt", "consequent")))
             ->add($grammar->term("RBRACE"));
+    }
+
+    private function sum()
+    {
+        $grammar = $this->getGrammar();
+
+        return $grammar->seq()
+            ->add($grammar->ruleRef("prod"))
+            ->add($grammar->many($this->seq_4()));
     }
 
 

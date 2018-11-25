@@ -67,17 +67,19 @@ expr_stmt -> ex#expr SEMICOLON
     :children [#ex]
 };
 
-expr -> prod ((PLUS|MINUS) prod)*;
-
-prod -> disjunction ((ASTERISK|SLASH) disjunction)*;
+expr -> disjunction => child;
 
 disjunction -> conj#conjunction (OR conj#conjunction)*;
 
 conjunction -> elem#logic_rel (AND elem#logic_rel)*;
 
-logic_rel -> operand ((EQ2 | NE | GT | LT) operand)?;
+logic_rel -> sum ((EQ2 | NE | GT | LT) sum)?;
 
-operand -> (NOT|MINUS) operand | atom_expr;
+sum -> prod ((PLUS|MINUS) prod)*;
+
+prod -> factor ((ASTERISK|SLASH) factor)*;
+
+factor -> (NOT|MINUS) factor | atom_expr;
 
 atom_expr ->
     if_expr |
