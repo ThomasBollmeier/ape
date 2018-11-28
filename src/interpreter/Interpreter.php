@@ -50,6 +50,8 @@ class Interpreter
                 return $this->evalProgram($ast, $env);
             case "expr_stmt":
                 return $this->evalExprStmt($ast, $env);
+            case "if":
+                return $this->evalIfExpr($ast, $env);
             case "negative":
                 return $this->evalNegative($ast, $env);
             case "not":
@@ -111,6 +113,27 @@ class Interpreter
     {
         $expr = $ast->getChildren()[0];
         return $this->eval($expr, $env);
+    }
+
+    private function evalIfExpr(Ast $ast, Environment $env) : IObject
+    {
+        $children = $ast->getChildren();
+
+        list($condition, $consequent, $alternative) = $children;
+
+        $condResult = $this->getTruthy($this->eval($condition->getChildren()[0], $env));
+        if ($condResult->getBool()) {
+            $stmts = $consequent->getChildren();
+            return $this->evalBlock($stmts, $env);
+        } else {
+            $stmts = $alternative->getChildren();
+            if (count($stmts) > 0) {
+                return $this->evalBlock($stmts, $env);
+            } else {
+                return NullObject::getInstance();
+            }
+        }
+
     }
 
     private function evalInteger(Ast $ast) : IObject

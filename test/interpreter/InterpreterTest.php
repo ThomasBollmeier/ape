@@ -54,7 +54,9 @@ class InterpreterTest extends TestCase
         $this->assertResult("41 + 1 == 42 && 3 > 4;", Boolean::getFalse());
         $this->assertResult("1 == 1 && 4 != 2*2 || 10 < 99;", Boolean::getTrue());
         $this->assertResult("1 == 1 && (4 != 2*2 || 10 < 99);", Boolean::getTrue());
-
+        $this->assertResult("if (1 == 1) { 42; };", new Integer(42));
+        $this->assertResult("if (1 == 2) { 42; };", NullObject::getInstance());
+        $this->assertResult("if (1 == 2) { 23; } else { 42; };", new Integer(42));
     }
 
     private function assertResult(string $stmt, IObject $expResult)
