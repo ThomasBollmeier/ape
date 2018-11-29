@@ -32,4 +32,9 @@ class ReturnObject implements IObject
     {
         return "Return <" . $this->object->toString(). ">";
     }
+
+    public function copy(): IObject
+    {
+        return new ReturnObject($this->object->copy());
+    }
 }

@@ -35,4 +35,9 @@ class NullObject implements IObject
     {
         return "null";
     }
+
+    public function copy(): IObject
+    {
+        return $this;
+    }
 }

@@ -35,4 +35,9 @@ class Integer implements IObject
     {
         return sprintf("%d", $this->value);
     }
+
+    public function copy(): IObject
+    {
+        return new Integer($this->value);
+    }
 }

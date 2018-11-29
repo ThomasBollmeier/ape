@@ -11,10 +11,12 @@ namespace tbollmeier\ape\interpreter;
 
 use tbollmeier\ape\object\Boolean;
 use tbollmeier\ape\object\ErrorObject;
+use tbollmeier\ape\object\FuncObject;
 use tbollmeier\ape\object\Integer;
 use tbollmeier\ape\object\IObject;
 use tbollmeier\ape\object\NullObject;
 use tbollmeier\ape\object\ObjectType;
+use tbollmeier\ape\object\ReturnObject;
 use tbollmeier\ape\parser\Parser;
 use tbollmeier\parsian\output\Ast;
 
@@ -48,10 +50,18 @@ class Interpreter
         switch ($name) {
             case "ape":
                 return $this->evalProgram($ast, $env);
+            case "let_stmt":
+                return $this->evalLetStmt($ast, $env);
             case "expr_stmt":
                 return $this->evalExprStmt($ast, $env);
             case "if":
                 return $this->evalIfExpr($ast, $env);
+            case "func_expr":
+                return $this->evalFuncExpr($ast, $env);
+            case "call":
+                return $this->evalCall($ast, $env);
+            case "return_stmt":
+                return $this->evalReturnStmt($ast, $env);
             case "negative":
                 return $this->evalNegative($ast, $env);
             case "not":
@@ -64,6 +74,8 @@ class Interpreter
                 return $this->evalConjunction($ast, $env);
             case "logic_relation":
                 return $this->evalLogicalRel($ast, $env);
+            case "identifier":
+                return $this->evalIdentifier($ast, $env);
             case "integer":
                 return $this->evalInteger($ast);
             case "null":
@@ -109,6 +121,23 @@ class Interpreter
         return $result;
     }
 
+    private function evalLetStmt(Ast $ast, Environment $env) : IObject
+    {
+        list($name, $value) = $ast->getChildren();
+
+        $identifier = $name->getText();
+        $obj = $this->eval($value->getChildren()[0], $env);
+        $env->setSymbol($identifier, $obj);
+
+        if ($obj->getType() == ObjectType::FUNCTION) {
+            // Set function name in function environment so that
+            // recursive calls are enabled
+            $obj->setFuncName($identifier);
+        }
+
+        return NullObject::getInstance();
+    }
+
     private function evalExprStmt(Ast $ast, Environment $env) : IObject
     {
         $expr = $ast->getChildren()[0];
@@ -134,6 +163,69 @@ class Interpreter
             }
         }
 
+    }
+
+    private function evalFuncExpr(Ast $ast, Environment $env)  : IObject
+    {
+        list($parameters, $body) = $ast->getChildren();
+        $params = array_map(function ($ast) { return $ast->getText(); },
+            $parameters->getChildren());
+
+        return new FuncObject($params, $body, $env->clone());
+    }
+
+    private function evalCall(Ast $ast, Environment $env) : IObject
+    {
+        list($callee, $arguments) = $ast->getChildren();
+
+        $fn = $this->eval($callee->getChildren()[0], $env);
+        if ($fn->getType() != ObjectType::FUNCTION) {
+            return new ErrorObject($fn->toString() . " is not a function");
+        }
+
+        $closure = new Environment($fn->getEnv());
+
+        $args = $arguments->getChildren();
+        $params = $fn->getParams();
+        $numArgs = count($args);
+        if ($numArgs != count($params)) {
+            return new ErrorObject("#arguments does not match #parameters");
+        }
+
+        for ($i=0; $i<$numArgs; $i++) {
+            $value = $this->eval($args[$i], $env);
+            if ($value->getType() == ObjectType::ERROR) {
+                return $value;
+            }
+            $closure->setSymbol($params[$i], $value);
+        }
+
+        $stmts = $fn->getBody()->getChildren();
+        $result = $this->evalBlock($stmts, $closure);
+        if ($result->getType() === ObjectType::RETURN) {
+            $result = $result->unwrap();
+        }
+
+        return $result;
+    }
+
+    private function evalReturnStmt(Ast $ast, Environment $env) : IObject
+    {
+        $valueNode = $ast->getChildren()[0];
+        $exprNode = $valueNode->getChildren()[0];
+        $value = $this->eval($exprNode, $env);
+
+        if ($value->getType() == ObjectType::ERROR) {
+            return $value;
+        }
+
+        return new ReturnObject($value);
+    }
+
+    private function evalIdentifier(Ast $ast, Environment $env) : IObject
+    {
+        $id = $ast->getText();
+        return $env->getSymbol($id);
     }
 
     private function evalInteger(Ast $ast) : IObject

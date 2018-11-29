@@ -52,7 +52,7 @@ class BaseParser extends parsian\Parser
         $lexer->addSymbol(":", "COLON");
 
         $lexer->addTerminal("/[a-zA-Z_][a-zA-Z0-9_]*/", "ID");
-        $lexer->addTerminal("/[1-9][0-9]*/", "INT");
+        $lexer->addTerminal("/(0|[1-9][0-9]*)/", "INT");
 
         $lexer->addKeyword("let");
         $lexer->addKeyword("return");

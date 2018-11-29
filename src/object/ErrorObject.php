@@ -27,4 +27,9 @@ class ErrorObject implements IObject
     {
         return "ERROR: " . $this->message;
     }
+
+    public function copy(): IObject
+    {
+        return new ErrorObject($this->message);
+    }
 }

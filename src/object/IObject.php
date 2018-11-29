@@ -13,4 +13,5 @@ interface IObject
 {
     public function getType();
     public function toString();
+    public function copy() : IObject;
 }

@@ -57,4 +57,9 @@ class Boolean implements IObject
     {
         return $this->value ? "true" : "false";
     }
+
+    public function copy(): IObject
+    {
+        return new Boolean($this->value);
+    }
 }

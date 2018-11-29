@@ -9,6 +9,7 @@
 namespace tbollmeier\ape\interpreter;
 
 
+use tbollmeier\ape\object\ErrorObject;
 use tbollmeier\ape\object\IObject;
 
 class Environment
@@ -26,8 +27,8 @@ class Environment
     {
         $this->symbols[$name] = $value;
     }
-    
-    public  function getSymbol(string $name) 
+
+    public  function getSymbol(string $name) : IObject
     {
         if (array_key_exists($name, $this->symbols)) {
             return $this->symbols[$name];
@@ -35,7 +36,7 @@ class Environment
             return $this->outer->getSymbol($name);
         } 
         
-        return null;
+        return new ErrorObject("Unknown symbol $name");
     }
 
     public function clone() : Environment
@@ -59,7 +60,7 @@ class Environment
 
         foreach ($envs as $env) {
             foreach ($env->symbols as $name => $value) {
-                $ret[$name] = $value;
+                $ret[$name] = $value->copy();
             }
         }
 

@@ -57,6 +57,23 @@ class InterpreterTest extends TestCase
         $this->assertResult("if (1 == 1) { 42; };", new Integer(42));
         $this->assertResult("if (1 == 2) { 42; };", NullObject::getInstance());
         $this->assertResult("if (1 == 2) { 23; } else { 42; };", new Integer(42));
+        $this->assertResult("let answer = 42; answer;", new Integer(42));
+
+        $code = <<<CODE
+let sum = fn (a, b) {
+    return a + b;
+};
+sum(41, 1);
+CODE;
+        $this->assertResult($code, new Integer(42));
+
+        $code = <<<CODE
+let fact = fn (n) {
+    if (n == 0) 1 else n * fact(n-1);
+};
+fact(5);
+CODE;
+        $this->assertResult($code, new Integer(120));
     }
 
     private function assertResult(string $stmt, IObject $expResult)
