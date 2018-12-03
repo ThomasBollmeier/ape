@@ -38,6 +38,7 @@ class Parser extends BaseParser
             return new Ast("false");
         });
 
+        $g->setCustomRuleAst("ape", [$this, "transApe"]);
         $g->setCustomRuleAst("disjunction", [$this, "transDisjunction"]);
         $g->setCustomRuleAst("conjunction", [$this, "transConjunction"]);
         $g->setCustomRuleAst("logic_rel", [$this, "transLogicRel"]);
@@ -45,7 +46,22 @@ class Parser extends BaseParser
         $g->setCustomRuleAst("prod", [$this, "transBinOp"]);
         $g->setCustomRuleAst("factor", [$this, "transFactor"]);
         $g->setCustomRuleAst("idx_access_or_call", [$this, "transIdxAccessOrCall"]);
+        $g->setCustomRuleAst("func_expr", [$this, "transFuncExpr"]);
+        $g->setCustomRuleAst("if_expr", [$this, "transIfExpr"]);
 
+    }
+
+    public function transApe(Ast $ast)
+    {
+        $ret = new Ast("ape");
+        $block = $ast->getChildren()[0];
+
+        foreach ($block->getChildren() as $child) {
+            $child->clearId();
+            $ret->addChild($child);
+        }
+
+        return $ret;
     }
 
     public function transBinOp(Ast $ast) {
@@ -208,6 +224,68 @@ class Parser extends BaseParser
 
         return $ret;
 
+    }
+
+    public function transFuncExpr(Ast $ast)
+    {
+        $ret = new Ast("func_expr");
+        $params = $ast->getChildrenById("p");
+        $block = $ast->getChildrenById("body")[0];
+
+        $parameters = new Ast("parameters");
+        $ret->addChild($parameters);
+        foreach ($params as $param) {
+            $param->clearId();
+            $parameters->addChild($param);
+        }
+
+        $body = new Ast("body");
+        $ret->addChild($body);
+        foreach ($block->getChildren() as $stmt) {
+            $stmt->clearId();
+            $body->addChild($stmt);
+        }
+
+        return $ret;
+    }
+
+    public function transIfExpr(Ast $ast)
+    {
+        $ret = new Ast("if");
+        $cond = $ast->getChildrenById("condition")[0];
+        $cond->clearId();
+        $condition = new Ast("condition");
+        $ret->addChild($condition);
+        $condition->addChild($cond);
+
+        $consequent = new Ast("consequent");
+        $ret->addChild($consequent);
+        $cons = $ast->getChildrenById("consequent")[0];
+        $cons->clearId();
+        if ($cons->getName() == "block") {
+            foreach ($cons->getChildren() as $stmt) {
+                $consequent->addChild($stmt);
+            }
+        } else {
+            $consequent->addChild($cons);
+        }
+
+        $alternative = new Ast("alternative");
+        $ret->addChild($alternative);
+        $alt = $ast->getChildrenById("alternative");
+        if (count($alt) > 0) {
+            $alt = $alt[0];
+            $alt->clearId();
+            if ($alt->getName() == "block") {
+                foreach ($alt->getChildren() as $stmt) {
+                    $alternative->addChild($stmt);
+                }
+            } else {
+                $alternative->addChild($alt);
+            }
+        }
+
+        return $ret;
     }
 
     private function createElemAccess($targetExpr, $indexExpr)

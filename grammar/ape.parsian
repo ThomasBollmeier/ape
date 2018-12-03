@@ -4,7 +4,7 @@ Grammar of APE
 APE is a PHP implementation of the Monkey programming language
 invented by Thorsten Ball (see https://interpreterbook.com/ for details)
 
-Version: 0.5
+Version: 0.6
 Author: Thomas Bollmeier <developer@thomas-bollmeier.de>
 *)
 
@@ -40,13 +40,19 @@ token ID /[a-zA-Z_][a-zA-Z0-9_]*/;
 token INT /(0|[1-9][0-9]*)/;
 
 @root
-ape -> stmt+;
+ape -> block;
+
+block -> (st#stmt (SEMICOLON st#stmt)* SEMICOLON?)?
+=> {
+    :name "block"
+    :children #st
+};
 
 stmt -> let_stmt
     | return_stmt
-    | expr_stmt => child;
+    | expr => child;
 
-let_stmt -> 'let' name#ID EQ value#expr SEMICOLON
+let_stmt -> 'let' name#ID EQ value#expr
 => {
     :name "let_stmt"
     :children [
@@ -55,16 +61,10 @@ let_stmt -> 'let' name#ID EQ value#expr SEMICOLON
     ]
 };
 
-return_stmt -> 'return' value#expr SEMICOLON
+return_stmt -> 'return' value#expr
 => {
     :name "return_stmt"
     :children [{:name "value" :children [#value]}]
-};
-
-expr_stmt -> ex#expr SEMICOLON
-=> {
-    :name "expr_stmt"
-    :children [#ex]
 };
 
 expr -> disjunction => child;
@@ -98,33 +98,12 @@ boolean -> 'true' | 'false' => child;
 
 func_expr -> 'fn' LPAR (p#expr (COMMA p#expr)*)? RPAR
     LBRACE
-    st#stmt*
-    RBRACE
-=> {
-    :name "func_expr"
-    :children [
-        {
-            :name "parameters"
-            :children #p
-        }
-        {
-            :name "body"
-            :children #st
-        }
-    ]
-};
+    body#block
+    RBRACE;
 
 if_expr -> 'if' LPAR condition#expr RPAR
-    (LBRACE consequent#stmt+ RBRACE | consequent#expr)
-    ('else' (LBRACE alternative#stmt+ RBRACE | alternative#expr))?
-=> {
-    :name "if"
-    :children [
-        {:name "condition" :children #condition}
-        {:name "consequent" :children #consequent}
-        {:name "alternative" :children #alternative}
-    ]
-};
+    (LBRACE consequent#block RBRACE | consequent#expr)
+    ('else' (LBRACE alternative#block RBRACE | alternative#expr))?;
 
 array_literal -> LBRACKET (el#expr (COMMA el#expr)*)? RBRACKET
 => {
