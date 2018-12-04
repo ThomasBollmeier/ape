@@ -9,6 +9,8 @@
 namespace tbollmeier\ape\interpreter;
 
 
+use function Couchbase\defaultDecoder;
+use tbollmeier\ape\object\ArrayObject;
 use tbollmeier\ape\object\Boolean;
 use tbollmeier\ape\object\ErrorObject;
 use tbollmeier\ape\object\FuncObject;
@@ -76,6 +78,10 @@ class Interpreter
                 return $this->evalLogicalRel($ast, $env);
             case "identifier":
                 return $this->evalIdentifier($ast, $env);
+            case "array":
+                return $this->evalArray($ast, $env);
+            case "element_access":
+                return $this->evalElementAccess($ast, $env);
             case "integer":
                 return $this->evalInteger($ast);
             case "null":
@@ -226,6 +232,46 @@ class Interpreter
     {
         $id = $ast->getText();
         return $env->getSymbol($id);
+    }
+
+    private function evalArray(Ast $ast, Environment $env) : IObject
+    {
+        $ret = new ArrayObject();
+
+        $elements = $ast->getChildren();
+        foreach ($elements as $element) {
+            $ret->addElement($this->eval($element, $env));
+        }
+
+        return $ret;
+    }
+
+    private function evalElementAccess(Ast $ast, Environment $env) : IObject
+    {
+        list ($container, $index) = $ast->getChildren();
+        $container = $container->getChildren()[0];
+        $index = $index->getChildren()[0];
+
+        $containerObj = $this->eval($container, $env);
+        $containerType = $containerObj->getType();
+        if ( $containerType != ObjectType::ARRAY &&
+             $containerType != ObjectType::MAP) {
+            return new ErrorObject("Element access only supported for arrays and maps");
+        }
+
+        $indexObj = $this->eval($index, $env);
+
+        switch ($containerType) {
+            case ObjectType::ARRAY:
+                if ($indexObj->getType() == ObjectType::INTEGER) {
+                    return $containerObj->get($indexObj->getInt());
+                } else {
+                    return new ErrorObject("Array index must be integer");
+                }
+            default:
+                return new ErrorObject("not indexable");
+        }
+
     }
 
     private function evalInteger(Ast $ast) : IObject

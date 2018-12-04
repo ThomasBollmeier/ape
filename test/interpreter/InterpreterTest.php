@@ -9,6 +9,7 @@
 
 namespace tbollmeier\ape\interpreter;
 
+use tbollmeier\ape\object\ArrayObject;
 use tbollmeier\ape\object\Boolean;
 use tbollmeier\ape\object\Integer;
 use tbollmeier\ape\object\IObject;
@@ -74,18 +75,31 @@ let fact = fn (n) {
 fact(5);
 CODE;
         $this->assertResult($code, new Integer(120));
+
+        $this->assertResult("let arr = [1, 2, 3]; arr",
+            new ArrayObject([
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+                ]));
+
+        $this->assertResult("let arr = [1, 2, 42]; arr[2]",
+            new Integer(42));
+
+        $this->assertResult("let arr = [1, 2, 42]; arr[3]",
+            NullObject::getInstance());
+
     }
 
     private function assertResult(string $stmt, IObject $expResult)
     {
-
         $parser = new Parser();
         $ast = $parser->parseString($stmt);
         if ($ast === false) {
             print($parser->error() . "\n");
             return;
         }
-        print($ast->toXml());
+        //print($ast->toXml());
 
         $result = $this->interpreter->evalCode($stmt);
         $this->assertEquals($expResult->getType(), $result->getType(), $ast->toXml());
