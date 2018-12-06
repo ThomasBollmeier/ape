@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f063a5e-af7b-4770-8b71-1f2a43afd995" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/object/ArrayObject.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/object/StringObject.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interpreter/Interpreter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/interpreter/Interpreter.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/interpreter/InterpreterTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/interpreter/InterpreterTest.php" afterDir="false" />
@@ -22,17 +22,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
+            <state relative-caret-position="1734">
               <caret line="102" selection-start-line="102" selection-end-line="102" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/interpreter/InterpreterTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
+            <state relative-caret-position="209">
+              <caret line="98" column="34" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
               <folding>
                 <element signature="e#129#167#0#PHP" expanded="true" />
               </folding>
@@ -41,10 +41,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/object/StringObject.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="22" column="62" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/interpreter/Interpreter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
-              <caret line="266" column="67" selection-start-line="266" selection-start-column="67" selection-end-line="266" selection-end-column="67" />
+            <state relative-caret-position="205">
+              <caret line="286" column="60" selection-start-line="286" selection-start-column="60" selection-end-line="286" selection-end-column="60" />
               <folding>
                 <element signature="e#129#167#0#PHP" expanded="true" />
               </folding>
@@ -55,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/object/ArrayObject.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
+            <state relative-caret-position="442">
               <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
             </state>
           </provider>
@@ -103,8 +112,9 @@
         <option value="$PROJECT_DIR$/grammar/ape.parsian" />
         <option value="$PROJECT_DIR$/src/parser/Parser.php" />
         <option value="$PROJECT_DIR$/src/object/ArrayObject.php" />
-        <option value="$PROJECT_DIR$/src/interpreter/Interpreter.php" />
+        <option value="$PROJECT_DIR$/src/object/StringObject.php" />
         <option value="$PROJECT_DIR$/test/interpreter/InterpreterTest.php" />
+        <option value="$PROJECT_DIR$/src/interpreter/Interpreter.php" />
       </list>
     </option>
   </component>
@@ -311,6 +321,7 @@
       <workItem from="1543866251880" duration="1142000" />
       <workItem from="1543868294608" duration="1392000" />
       <workItem from="1543951064893" duration="2019000" />
+      <workItem from="1544130929713" duration="1037000" />
     </task>
     <task id="LOCAL-00001" summary="Support for expressions">
       <created>1541280745162</created>
@@ -442,18 +453,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="InterpreterTest - 2018.12.03 at 21h 37m 05s.xml">
-      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="InterpreterTest - 2018.12.03 at 21h 37m 29s.xml">
-      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="InterpreterTest - 2018.12.03 at 21h 38m 29s.xml">
-      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="InterpreterTest - 2018.12.04 at 20h 28m 44s.xml">
-      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
     <history-entry file="InterpreterTest - 2018.12.04 at 20h 30m 35s.xml">
       <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
@@ -472,9 +471,21 @@
     <history-entry file="InterpreterTest - 2018.12.04 at 20h 51m 29s.xml">
       <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
+    <history-entry file="InterpreterTest - 2018.12.06 at 22h 20m 12s.xml">
+      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="InterpreterTest - 2018.12.06 at 22h 26m 06s.xml">
+      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="InterpreterTest - 2018.12.06 at 22h 29m 21s.xml">
+      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="InterpreterTest - 2018.12.06 at 22h 31m 15s.xml">
+      <configuration name="InterpreterTest" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54067000" />
+    <option name="totallyTimeSpent" value="55104000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -489,12 +500,12 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49224806" visible="true" weight="0.38785425" />
-      <window_info id="Structure" order="1" sideWeight="0.50775194" side_tool="true" visible="true" weight="0.38785425" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49023092" visible="true" weight="0.394332" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.5097691" side_tool="true" visible="true" weight="0.394332" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3291815" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.54174066" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.54174066" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3985765" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -695,31 +706,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="102" selection-start-line="102" selection-end-line="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/object/ObjectType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/Parser.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="97">
           <caret line="232" column="48" selection-start-line="232" selection-start-column="48" selection-end-line="232" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/object/ArrayObject.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -730,20 +720,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/interpreter/Interpreter.php">
+    <entry file="file://$PROJECT_DIR$/grammar/ape.parsian">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="266" column="67" selection-start-line="266" selection-start-column="67" selection-end-line="266" selection-end-column="67" />
+        <state relative-caret-position="1734">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/object/ArrayObject.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/object/ObjectType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/object/StringObject.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="22" column="62" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/interpreter/InterpreterTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="98" column="34" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
           <folding>
             <element signature="e#129#167#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/interpreter/InterpreterTest.php">
+    <entry file="file://$PROJECT_DIR$/src/interpreter/Interpreter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
+        <state relative-caret-position="205">
+          <caret line="286" column="60" selection-start-line="286" selection-start-column="60" selection-end-line="286" selection-end-column="60" />
           <folding>
             <element signature="e#129#167#0#PHP" expanded="true" />
           </folding>

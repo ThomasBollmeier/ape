@@ -9,7 +9,6 @@
 namespace tbollmeier\ape\interpreter;
 
 
-use function Couchbase\defaultDecoder;
 use tbollmeier\ape\object\ArrayObject;
 use tbollmeier\ape\object\Boolean;
 use tbollmeier\ape\object\ErrorObject;
@@ -19,6 +18,7 @@ use tbollmeier\ape\object\IObject;
 use tbollmeier\ape\object\NullObject;
 use tbollmeier\ape\object\ObjectType;
 use tbollmeier\ape\object\ReturnObject;
+use tbollmeier\ape\object\StringObject;
 use tbollmeier\ape\parser\Parser;
 use tbollmeier\parsian\output\Ast;
 
@@ -84,6 +84,8 @@ class Interpreter
                 return $this->evalElementAccess($ast, $env);
             case "integer":
                 return $this->evalInteger($ast);
+            case "string":
+                return $this->evalString($ast);
             case "null":
                 return NullObject::getInstance();
             case "true":
@@ -280,6 +282,11 @@ class Interpreter
         return new Integer($value);
     }
 
+    private function evalString(Ast $ast) : IObject
+    {
+        return new StringObject(trim($ast->getText(), '""'));
+    }
+
     private function evalBinaryOp(Ast $ast, Environment $env) : IObject
     {
         $op = $ast->getAttr("operator");
@@ -292,6 +299,9 @@ class Interpreter
                 if ($left->getType() == ObjectType::INTEGER &&
                     $right->getType() == ObjectType::INTEGER) {
                     return new Integer($left->getInt() + $right->getInt());
+                } else if ($left->getType() == ObjectType::STRING &&
+                    $right->getType() == ObjectType::STRING) {
+                    return $left->concat($right);
                 } else {
                     return new ErrorObject("unsupported operand types for $op");
                 }

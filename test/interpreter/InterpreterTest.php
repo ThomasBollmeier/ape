@@ -14,6 +14,7 @@ use tbollmeier\ape\object\Boolean;
 use tbollmeier\ape\object\Integer;
 use tbollmeier\ape\object\IObject;
 use tbollmeier\ape\object\NullObject;
+use tbollmeier\ape\object\StringObject;
 use tbollmeier\ape\parser\Parser;
 use PHPUnit\Framework\TestCase;
 
@@ -88,6 +89,14 @@ CODE;
 
         $this->assertResult("let arr = [1, 2, 42]; arr[3]",
             NullObject::getInstance());
+
+        $code = <<<CODE
+let first_name = "Thomas";
+let last_name = "Bollmeier";
+let ego = first_name + " " + last_name;
+ego;
+CODE;
+        $this->assertResult($code, new StringObject("Thomas Bollmeier"));
 
     }
 
